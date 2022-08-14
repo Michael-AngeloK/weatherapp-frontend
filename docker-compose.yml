@@ -7,7 +7,7 @@ services:
             dockerfile: Dockerfile.backend
             context: ./backend
         environment:
-            APPID: "< api key here >"
+            APPID: "d5d041f1a42d1eb303cacb421ed1b8fc"
             MAP_ENDPOINT: "http://api.openweathermap.org/data/2.5"
             TARGET_CITY: "Helsinki,fi"
         ports:
