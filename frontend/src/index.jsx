@@ -39,9 +39,9 @@ class Weather extends React.Component {
         {
           icon: weatherData.weather[0].icon.slice(0, -1),
           updatedAt: new Date().toISOString(),
-          temperature: '29o',
-          humidity: '50%',
-          air_press: '1000mb',
+          temperature: weatherData.main.temp + '°C',
+          humidity: weatherData.main.humidity + '%',
+          air_press: weatherData.main.pressure + ' mb',
           error: '',
         });
     } else {
