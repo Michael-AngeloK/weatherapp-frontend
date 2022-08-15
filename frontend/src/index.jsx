@@ -55,10 +55,10 @@ class Weather extends React.Component {
   }
 
   render() {
-    const { icon, location, updatedAt, timeStamp, temperature, humidity, air_press } = this.state;
+    const { icon, location, updatedAt, temperature, humidity, air_press } = this.state;
 
     return (
-      <div>
+      <div className="container">
         <div className="header">Curent weather in {location}</div>
         <div className="weather">
           {icon && <img className="icon" alt="weather_icon" src={require(`./public/img/${icon}.svg`)} />}

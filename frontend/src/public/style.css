@@ -10,7 +10,6 @@
 .header{
   font-size: 42px;
   font-weight: 600;
-  color: #d9dee8;
 }
 
 body{
@@ -21,6 +20,22 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.container{
+  padding: 30px;
+  display: inline-block;
+  border-radius: 40px;
+  background-color:#d9dee8;
+  border-color: #0070b1;
+  border-radius: 30px;
+  border-style: solid;
+  border-width: 2px;
+}
+
+.container * {
+  background-color:#d9dee8;
+  color:#42a7ff;
 }
 
 .weather{
@@ -40,6 +55,7 @@ body{
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  align-items: left;
   width: 700px;
 }
 
@@ -47,7 +63,7 @@ body{
   list-style: none;
   font-size: 23px;
   font-weight: 600;
-  color: #d9dee8;
+  color:#42a7ff;
 }
 
 .meta b{
@@ -69,10 +85,10 @@ body{
   width: 125px;
   height: 30px;
   border-radius: 5px;
-  border: 1.5px solid #d9dee8;
+  border: 1.5px solid #42a7ff;
 }
 
 .update button:hover{
-  background-color: #d9dee8;
-  color: #42a7ff;
+  background-color: #42a7ff;
+  color: #d9dee8;
 }
