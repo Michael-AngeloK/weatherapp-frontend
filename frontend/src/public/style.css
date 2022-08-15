@@ -3,13 +3,14 @@
   margin: 0;
   padding: 0;
   background:#42a7ff;
+  font-family: Roboto, sans-serif;
   /*border: 2px solid red;*/
 }
 
 .header{
-  font-size: 40px;
+  font-size: 42px;
   font-weight: 600;
-  color: #d9dee8
+  color: #d9dee8;
 }
 
 body{
@@ -30,7 +31,7 @@ body{
   display: flex;
   width: 30vw;
   height: 30vw;
-  padding: 20px 20px 10px 0px;
+  padding: 20px 20px 10px 20px;
   width: 200px;
   height: 200px;
 }
@@ -42,26 +43,27 @@ body{
 }
 
 .meta p{
-  font-size: 25px;
+  font-size: 23px;
   font-weight: 600;
-  color: #d9dee8
+  color: #d9dee8;
 }
 
 .update{
   display: flex;
   justify-content: center;
-  padding: 20px 0px;
+  padding: 0px;
+  margin: 20px 50px;
 }
 
 .update button{
   flex-shrink: 0;
-  width: 150px;
+  width: 125px;
   height: 30px;
   border-radius: 5px;
   border: 1.5px solid #d9dee8;
 }
 
-.update:hover button{
+.update button:hover{
   background-color: #d9dee8;
   color: #42a7ff;
 }
