@@ -4,9 +4,10 @@ import './public/style.css';
 
 const baseURL = process.env.ENDPOINT || 'http://localhost:9000/api';
 
+const currentTime = Date.now()/1000;
 const getWeatherFromApi = async (city) => {
   try {
-    const response = await fetch(`${baseURL}/weatherbycity?city=${city}`);
+    const response = await fetch(`${baseURL}/weatherbycity?city=${city}&dt=${currentTime}` );
     return response.json();
   } catch (error) {
     console.error(error);
@@ -21,7 +22,7 @@ class Weather extends React.Component {
 
     this.state = {
       icon: '',
-      timeStamp: '',
+      timeStamp: currentTime,
       location: 'Helsinki',
       error: '',
     };
@@ -50,19 +51,19 @@ class Weather extends React.Component {
   }
 
   render() {
-    const { icon, location, updatedAt, temperature, humidity, air_press } = this.state;
+    const { icon, location, updatedAt, timeStamp, temperature, humidity, air_press } = this.state;
 
     return (
       <div>
         <div className="header">Curent weather in {location}</div>
         <div className="weather">
           {icon && <img className="icon" alt="weather_icon" src={require(`./public/img/${icon}.svg`)} />}
-          <div className="meta">
-            {updatedAt && <p>{updatedAt}</p>}
-            {<p className="temperature">{temperature}</p>}
-            {<p className="humidity">{humidity}</p>}
-            {<p className="air_press">{air_press}</p>}
-          </div>
+          <ul className="meta">
+            {updatedAt && <li><b>Updated At</b>: {updatedAt}</li>}
+            {<li><b>Temperature</b>: {temperature}</li>}
+            {<li><b>Humidity</b>: {humidity}</li>}
+            {<li><b>Air Pressure</b>: {air_press}</li>}
+          </ul>
         </div>
         <div className="update">
           <button onClick={() => this.getWeather()}>Update</button>

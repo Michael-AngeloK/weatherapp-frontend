@@ -39,13 +39,22 @@ body{
 .meta{
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
+  width: 700px;
 }
 
-.meta p{
+.meta li{
+  list-style: none;
   font-size: 23px;
   font-weight: 600;
   color: #d9dee8;
+}
+
+.meta b{
+  display: inline-block;
+  width: 20%;
+  position: relative;
+  padding-right: 10px;
 }
 
 .update{
