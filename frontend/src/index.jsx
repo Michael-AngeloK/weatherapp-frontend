@@ -39,22 +39,32 @@ class Weather extends React.Component {
         {
           icon: weatherData.weather[0].icon.slice(0, -1),
           updatedAt: new Date().toISOString(),
+          temperature: '29o',
+          humidity: '50%',
+          air_press: '1000mb',
           error: '',
         });
     } else {
-      this.setState({ error: 'Unbable to fetch weather' });
+      this.setState({ error: 'Unable to fetch weather' });
     }
   }
 
   render() {
-    const { icon, location, updatedAt } = this.state;
+    const { icon, location, updatedAt, temperature, humidity, air_press } = this.state;
 
     return (
       <div>
-        <div className="icon">
-          <h2>Curent weather in {location}</h2>
-          {icon && <img width={200} height={200} alt="weather_icon" src={require(`./public/img/${icon}.svg`)} />}
-          {updatedAt && <p>{updatedAt}</p>}
+        <div className="header">Curent weather in {location}</div>
+        <div className="weather">
+          {icon && <img className="icon" alt="weather_icon" src={require(`./public/img/${icon}.svg`)} />}
+          <div className="meta">
+            {updatedAt && <p>{updatedAt}</p>}
+            {<p className="temperature">{temperature}</p>}
+            {<p className="humidity">{humidity}</p>}
+            {<p className="air_press">{air_press}</p>}
+          </div>
+        </div>
+        <div className="update">
           <button onClick={() => this.getWeather()}>Update</button>
         </div>
       </div>

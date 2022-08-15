@@ -1,3 +1,17 @@
+
+*{
+  margin: 0;
+  padding: 0;
+  background:#42a7ff;
+  /*border: 2px solid red;*/
+}
+
+.header{
+  font-size: 40px;
+  font-weight: 600;
+  color: #d9dee8
+}
+
 body{
   overflow: hidden;
   position: absolute;
@@ -8,8 +22,46 @@ body{
   align-items: center;
 }
 
-.icon {
+.weather{
+  display: flex;
+}
+
+.icon{
+  display: flex;
   width: 30vw;
   height: 30vw;
-  padding-top: 20px;
+  padding: 20px 20px 10px 0px;
+  width: 200px;
+  height: 200px;
+}
+
+.meta{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.meta p{
+  font-size: 25px;
+  font-weight: 600;
+  color: #d9dee8
+}
+
+.update{
+  display: flex;
+  justify-content: center;
+  padding: 20px 0px;
+}
+
+.update button{
+  flex-shrink: 0;
+  width: 150px;
+  height: 30px;
+  border-radius: 5px;
+  border: 1.5px solid #d9dee8;
+}
+
+.update:hover button{
+  background-color: #d9dee8;
+  color: #42a7ff;
 }
