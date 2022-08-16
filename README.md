@@ -22,3 +22,7 @@ This is my version of the cool weather app. It is not a completely finished prod
 * The update button did not work when I forked the repo. I tried to make it work too, but I eventually left it as it is
 * Wanted to maybe add textbox where you can apply your selected country you wanted to know the weather of, but due to the update function not working properly it got dropped.
 * Wanted to go deeper into Robot Framework tests, but I would exceed my time limit. Therefore I would say I have not fully experienced the Robot Framework tool, but I understand its properties.
+
+## Author
+
+Michael-Angelo Karpowicz
