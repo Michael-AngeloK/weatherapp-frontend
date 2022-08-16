@@ -12,8 +12,11 @@ This is my version of the cool weather app. It is not a completely finished prod
     - And demo frontend in http://localhost:8000
 3. Once you try to open http://localhost:8000 on your browser you get a prompt asking you to "allow it to know your location" and press "Allow". This makes sure it geolocation functions properly.
 
-## Example
-IMAGE HERE
+<img src="./img/allowlocation.png" alt= "img"  width="400">
+
+
+## Full Page example
+<img src="./img/allowlocation.png" alt= "img"  width="250">
 
 ## NB!
 * Update button
