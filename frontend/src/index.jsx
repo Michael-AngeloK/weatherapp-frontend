@@ -39,20 +39,56 @@ class Weather extends React.Component {
       timeStamp: currentTime,
       lat: '',
       lon: '',
-      country: '',
-      city: '',
+      country: 'Finland',
+      city: 'Helsinki',
       error: '',
     };
   }
 
   async componentDidMount() {
-    this.getUserCoordinates();
-    this.getLocationByCoordinates();
-    this.getWeather();
+    this.getInformation();
   }
 
-  async getWeather() {
-    const [weatherData] = await Promise.all([getWeatherFromApi(this.state.country)]);
+
+  async getInformation() {
+    /*Get latitude and longitude */
+    if (geolocationAPI) {
+      geolocationAPI.getCurrentPosition((position) => {
+        const { coords } = position;
+        this.setState({lat: coords.latitude});
+        
+        this.setState({lon: coords.longitude});
+        console.log('latitude: ', this.state.lat);
+        console.log('longitude: ', this.state.lon);
+
+        /*Get location by latitude and longitude */
+        this.getLocationByCoordinates(coords.latitude, coords.longitude);
+      })
+    } else {
+      this.setState({ error: 'Geolocation API is not available in your browser!' });
+    }
+  }
+
+  /*Get location data */
+  async getLocationByCoordinates(lat, lon) {
+    const [locationData] = await Promise.all([getCountryFromApi(lat, lon)]);
+    if (locationData) {
+      console.log('Location data:', locationData);
+      this.setState(
+        {
+          country: locationData.features[0].properties.country,
+          city: locationData.features[0].properties.city,
+        });
+      } else {
+        this.setState({ error: 'Unable to fetch from Geoapify.com API' });
+      }
+    /*Get weather meta information (if locationData null, then it should default to Helsinki)
+      BUT "lat" and "lon" will not represent Helsinki as of now*/
+    this.getWeather(this.state.city);
+  }
+
+  async getWeather(city) {
+    const [weatherData] = await Promise.all([getWeatherFromApi(city)]);
     if (weatherData) {
       console.log('Weather data:', weatherData);
       console.log('Current time in unix:', currentTime);
@@ -69,32 +105,6 @@ class Weather extends React.Component {
     } else {
       this.setState({ error: 'Unable to fetch weather' });
     }
-  }
-
-  /*Get latitude and longitude */
-  async getUserCoordinates() {
-    if (geolocationAPI) {
-      geolocationAPI.getCurrentPosition((position) => {
-        const { coords } = position;
-        this.setState({lat: coords.latitude});
-        
-        this.setState({lon: coords.longitude});
-        console.log('latitude: ', this.state.lat);
-        console.log('longitude: ', this.state.lon);
-        this.getLocationByCoordinates(coords.latitude, coords.longitude);
-      })
-    }
-  }
-
-  /*Get location data*/
-  async getLocationByCoordinates(lat, lon) {
-    const [locationData] = await Promise.all([getCountryFromApi(lat, lon)]);
-      console.log('Location data:', locationData);
-      this.setState(
-        {
-          country: locationData.features[0].properties.country,
-          city: locationData.features[0].properties.city,
-        });
   }
   
   render() {
