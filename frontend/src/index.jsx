@@ -1,12 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './public/style.css';
+import { useState } from 'react';
 
 const baseURL = process.env.ENDPOINT || 'http://localhost:9000/api';
 const subHours = 3;
+const geolocationAPI = navigator.geolocation;
 
 var currentTime = currentTime = Date.now()/1000;
 var newCurr = currentTime - subHours * 3 * 1000;
+
 const getWeatherFromApi = async (city) => {
   try {
     const response = await fetch(`${baseURL}/weatherbycity?city=${city}&dt=${currentTime}` );
@@ -21,17 +24,20 @@ const getWeatherFromApi = async (city) => {
 class Weather extends React.Component {
   constructor(props) {
     super(props);
-
+  
     this.state = {
       icon: '',
       timeStamp: currentTime,
       location: 'Helsinki',
+      lat: '',
+      long: '',
       error: '',
     };
   }
 
   async componentWillMount() {
     this.getWeather();
+    this.getUserCoordinates();
   }
 
   async getWeather() {
@@ -54,8 +60,22 @@ class Weather extends React.Component {
     }
   }
 
+  async getUserCoordinates() {
+    if (!geolocationAPI) {
+      setError('Geolocation API is not available in your browser!')
+    } else {
+      geolocationAPI.getCurrentPosition((position) => {
+        const { coords } = position;
+        this.setState({lat: coords.latitude});
+        this.setState({long: coords.longitude});
+      }, (error) => {
+        setError('Something went wrong getting your position!')
+      })
+    }
+  }
+  
   render() {
-    const { icon, location, updatedAt, temperature, humidity, air_press } = this.state;
+    const { icon, location, updatedAt, temperature, humidity, air_press, lat, long } = this.state;
 
     return (
       <div className="container">
@@ -67,6 +87,8 @@ class Weather extends React.Component {
             {<li><b>Temperature</b>: {temperature}</li>}
             {<li><b>Humidity</b>: {humidity}</li>}
             {<li><b>Air Pressure</b>: {air_press}</li>}
+            {<li><b>Latitude</b>: {lat}</li>}
+            {<li><b>Longitude</b>: {long}</li>}
           </ul>
         </div>
         <div className="update">
