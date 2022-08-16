@@ -3,5 +3,6 @@ Library           SeleniumLibrary
 
 *** Test Cases ***
 TestCase1
-    Open Browser    https://shopee.vn/    Edge
-    Sleep 3s
+    open Browser                https://localhost:8000    Edge
+    wait until page contains    Current weather in     
+    close Browser
