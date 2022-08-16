@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 5.0.1 (Python 3.8.10 on linux)" generated="20220816 20:50:20.089" rpa="false" schemaversion="3">
+<suite id="s1" name="Hello" source="/home/Repos/weatherapp-frontend/test/hello.robot">
+<test id="s1-t1" name="TestCase1" line="5">
+<kw name="Open Browser" library="SeleniumLibrary">
+<arg>https://shopee.vn/</arg>
+<arg>Edge</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<msg timestamp="20220816 20:50:20.201" level="INFO">Opening browser 'Edge' to base url 'https://shopee.vn/'.</msg>
+<msg timestamp="20220816 20:50:20.257" level="INFO">Cannot capture screenshot because no browser is open.</msg>
+<msg timestamp="20220816 20:50:20.258" level="FAIL">WebDriverException: Message: 'msedgedriver' executable needs to be in PATH. Please download from https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/
+</msg>
+<status status="FAIL" starttime="20220816 20:50:20.201" endtime="20220816 20:50:20.259"/>
+</kw>
+<kw name="Sleep 3s">
+<status status="NOT RUN" starttime="20220816 20:50:20.261" endtime="20220816 20:50:20.261"/>
+</kw>
+<status status="FAIL" starttime="20220816 20:50:20.200" endtime="20220816 20:50:20.262">WebDriverException: Message: 'msedgedriver' executable needs to be in PATH. Please download from https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/
+</status>
+</test>
+<status status="FAIL" starttime="20220816 20:50:20.089" endtime="20220816 20:50:20.263"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="0" fail="1" skip="0" id="s1" name="Hello">Hello</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
