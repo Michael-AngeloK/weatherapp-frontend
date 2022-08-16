@@ -8,7 +8,9 @@ services:
             context: ./backend
         environment:
             APPID: "d5d041f1a42d1eb303cacb421ed1b8fc"
+            APIKEY: "992b4c1daa304a44928a0b48a1dfa511"
             MAP_ENDPOINT: "http://api.openweathermap.org/data/2.5"
+            GEO_ENDPOINT: "https://api.geoapify.com/v1/geocode"
             TARGET_CITY: "Helsinki,fi"
         ports:
             - "9000:9000"

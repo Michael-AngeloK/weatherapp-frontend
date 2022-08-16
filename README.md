@@ -64,3 +64,4 @@ Good documentation benefits everyone.
 
 
 
+Google Cloud Free Trial ends: Ends November 15, 2022

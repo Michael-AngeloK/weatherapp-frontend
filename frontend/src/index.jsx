@@ -9,6 +9,8 @@ const geolocationAPI = navigator.geolocation;
 
 var currentTime = currentTime = Date.now()/1000;
 var newCurr = currentTime - subHours * 3 * 1000;
+var latitude;
+var longitude;
 
 const getWeatherFromApi = async (city) => {
   try {
@@ -17,9 +19,16 @@ const getWeatherFromApi = async (city) => {
   } catch (error) {
     console.error(error);
   }
-
-  return {};
 };
+
+const getCountryFromApi = async (lat, lon) => {
+  try {
+    const response = await fetch(`${baseURL}/locationbylatlon?lat=${lat}&lon=${lon}` );
+    return response.json();
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 class Weather extends React.Component {
   constructor(props) {
@@ -28,20 +37,22 @@ class Weather extends React.Component {
     this.state = {
       icon: '',
       timeStamp: currentTime,
-      location: 'Helsinki',
       lat: '',
-      long: '',
+      lon: '',
+      country: '',
+      city: '',
       error: '',
     };
   }
 
-  async componentWillMount() {
-    this.getWeather();
+  async componentDidMount() {
     this.getUserCoordinates();
+    this.getLocationByCoordinates();
+    this.getWeather();
   }
 
   async getWeather() {
-    const [weatherData] = await Promise.all([getWeatherFromApi(this.state.location)]);
+    const [weatherData] = await Promise.all([getWeatherFromApi(this.state.country)]);
     if (weatherData) {
       console.log('Weather data:', weatherData);
       console.log('Current time in unix:', currentTime);
@@ -60,26 +71,38 @@ class Weather extends React.Component {
     }
   }
 
+  /*Get latitude and longitude */
   async getUserCoordinates() {
-    if (!geolocationAPI) {
-      setError('Geolocation API is not available in your browser!')
-    } else {
+    if (geolocationAPI) {
       geolocationAPI.getCurrentPosition((position) => {
         const { coords } = position;
         this.setState({lat: coords.latitude});
-        this.setState({long: coords.longitude});
-      }, (error) => {
-        setError('Something went wrong getting your position!')
+        
+        this.setState({lon: coords.longitude});
+        console.log('latitude: ', this.state.lat);
+        console.log('longitude: ', this.state.lon);
+        this.getLocationByCoordinates(coords.latitude, coords.longitude);
       })
     }
   }
+
+  /*Get location data*/
+  async getLocationByCoordinates(lat, lon) {
+    const [locationData] = await Promise.all([getCountryFromApi(lat, lon)]);
+      console.log('Location data:', locationData);
+      this.setState(
+        {
+          country: locationData.features[0].properties.country,
+          city: locationData.features[0].properties.city,
+        });
+  }
   
   render() {
-    const { icon, location, updatedAt, temperature, humidity, air_press, lat, long } = this.state;
+    const { icon, updatedAt, temperature, humidity, air_press, lat, lon, country, city } = this.state;
 
     return (
       <div className="container">
-        <div className="header">Curent weather in {location}</div>
+        <div className="header">Curent weather in {country}, {city}</div>
         <div className="weather">
           {icon && <img className="icon" alt="weather_icon" src={require(`./public/img/${icon}.svg`)} />}
           <ul className="meta">
@@ -88,7 +111,7 @@ class Weather extends React.Component {
             {<li><b>Humidity</b>: {humidity}</li>}
             {<li><b>Air Pressure</b>: {air_press}</li>}
             {<li><b>Latitude</b>: {lat}</li>}
-            {<li><b>Longitude</b>: {long}</li>}
+            {<li><b>Longitude</b>: {lon}</li>}
           </ul>
         </div>
         <div className="update">

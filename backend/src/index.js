@@ -4,7 +4,9 @@ import fetch from 'node-fetch';
 import cors from 'kcors';
 
 const appId = process.env.APPID || '';
+const api_key = process.env.APIKEY || '';
 const mapURI = process.env.MAP_ENDPOINT || 'http://api.openweathermap.org/data/2.5';
+const geoapifyURL = process.env.GEO_ENDPOINT || 'https://api.geoapify.com/v1/geocode';
 const targetCity = process.env.TARGET_CITY || 'Helsinki,fi';
 
 const port = process.env.PORT || 9000;
@@ -15,6 +17,13 @@ app.use(cors());
 
 const fetchWeather = async (requestCity) => {
   const endpoint = `${mapURI}/weather?q=${requestCity ? requestCity : targetCity}&appid=${appId}&units=metric`;
+  const response = await fetch(endpoint);
+
+  return response ? response.json() : {};
+};
+
+const fetchLocationByLatLon = async (lat, lon) => {
+  const endpoint = `${geoapifyURL}/reverse?lat=${lat}&lon=${lon}&apiKey=${api_key}`;
   const response = await fetch(endpoint);
 
   return response ? response.json() : {};
@@ -46,6 +55,15 @@ router.get('/api/weatherbycity', async ctx => {
   const weatherData = await fetchWeather(city);
   ctx.type = 'application/json; charset=utf-8';
   ctx.body = weatherData.weather ? weatherData : {};
+});
+
+router.get('/api/locationbylatlon', async ctx => {
+  if (ctx.request.query.lon && ctx.request.query.lat) {
+    const { lon, lat, } = ctx.request.query;
+    const locationData = await fetchLocationByLatLon(lat, lon);
+    ctx.type = 'application/json; charset=utf-8';
+    ctx.body = locationData.features ? locationData : {};
+  }
 });
 
 router.get('/api/weatherbycoordinates', async ctx => {
